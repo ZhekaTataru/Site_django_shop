@@ -1,0 +1,3 @@
+django admin:
+Логін - admin
+Пароль - wasd
