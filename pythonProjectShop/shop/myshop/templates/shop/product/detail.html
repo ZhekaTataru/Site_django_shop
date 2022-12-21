@@ -1,0 +1,37 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+{{ product.name }}
+{% endblock %}
+{% block content %}
+<div class="content">
+        <div class="content_2">
+            <div class="detail_img">
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}
+                {% static 'img/no_image.png' %}{% endif %}" alt="" class="detail_img_tovar">
+            </div>
+            <div class="detail_text">
+                <div class="detail_name">
+                    <h4 class="detail_name_tovar">{{ product.name }}</h4>
+                    <p><a style="color: rgb(137, 196, 244); text-decoration:underline" href="{{ product.category.get_absolute_url }}">
+                        <h5 style="font-size: 20px; margin-top: 25px; color: grey;">{{product.category }}</h5></p></a>
+                </div>
+                <div class="detail_price">
+                    <h5 class="price_detail">{{ product.price }} ₴</h5>
+                </div>
+                <div class="detail_number">
+                    <form id="cart_form" action="{% url 'cart:cart_add' product.id %}" method="post">
+                    {{ cart_product_form }}
+                    {% csrf_token %}
+                    </form>
+                </div>
+                <div class="detail_button">
+                    <button  form="cart_form" type="submit" formmethod="post" class="custom-btn btn-7"><span>В КОРЗИНУ</span></button>
+                </div>
+                <div class="detail_info">
+                    <h4 class="info_text"><p>{{ product.description|linebreaks }}</p></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+  Корзина покупок
+{% endblock %}
+
+{% block content %}
+<div class="content">
+            <div class="content_3">
+                <h1 style="color: orange; margin-left: 135px;">Корзина покупок</h1>
+                <table>
+                    <tr>
+                        <th colspan="2">НАИМЕНОВАНИЕ ТОВАРА</th>
+                        <th>Цена за шт</th>
+                        <th>Количество</th>
+                        <th>Итого</th>
+                        <th>Удалить</th>
+                    </tr>
+                  {% for item in cart %}
+                    {% with product=item.product %}
+                      <tr>
+                        <td>
+                          <a href="{{ product.get_absolute_url }}">
+                            <img class="img_table" src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+                          </a>
+                        </td>
+                        <td>
+                            <div class="text_name">
+                                <a href="{{ product.get_absolute_url }}" class="name_tovar">
+                                    <h4 class="name_tovar">{{ product.name }}</h4>
+                                </a>
+                            </div>
+                        </td>
+                        <td>{{ item.price }} ₴</td>
+
+                        <td>
+                          <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                          {{ item.update_quantity_form.quantity }}
+                          {{ item.update_quantity_form.update }}
+                          <input type="submit" value="Обновить">
+                          {% csrf_token %}
+                          </form>
+                        </td>
+                        <td>{{ item.total_price }} ₴</td>
+                        <td><a style="text-decoration: none;" href="{% url 'cart:cart_remove' product.id %}">
+                                <h2>&#10060;</h2>
+                            </a></td>
+                      </tr>
+                    {% endwith %}
+                  {% endfor %}
+                    <tr>
+                        <th colspan="7">
+                            Итого: {{ cart.get_total_price }} ₴
+                        </th>
+                    </tr>
+                </table>
+                <div class="middle">
+                    <a href="{% url 'shop:product_list' %}" class="btn_cart">Продолжить покупки</a>
+                    <a href="#" class="btn_cart">Оформить заказ</a>
+                  </div>
+            </div>
+        </div>
+{% endblock %}

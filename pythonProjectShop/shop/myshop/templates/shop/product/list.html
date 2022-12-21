@@ -1,0 +1,52 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+{% if category %}{{ category.name }}{% else %}Товары{% endif %}
+{% endblock %}
+{% block content %}
+
+<div class="content">
+    <div class="content_2">
+      <div id="sidebar">
+        <p><h3 style="font-weight:bold; font-size:35px;" >Категория</h3style></p>
+        <ul>
+          <li {% if not category %}class="selected" {% endif %}>
+            <a class="a_category" href="{% url 'shop:product_list' %}">Все</a>
+          </li>
+          {% for c in categories %}
+          <li {% if category.slug == c.slug %}class="selected" {% endif %}>
+            <a class="a_category" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="katalog">
+
+          {% for product in products %}
+        <div class="tovar">
+          <div class="img">
+            <a href="{{ product.get_absolute_url }}">
+                <img src="{% if product.image %}{{ product.image.url }}{%else %}{% static 'img/no_image.png' %}{% endif %}">
+            </a>
+          </div>
+          <div class="text">
+            <div class="text_name">
+              <a href="{{ product.get_absolute_url }}" class="name_tovar">
+                <h4 class="name_tovar">{{ product.name }}</h4>
+              </a>
+            </div>
+            <div class="text_category">
+              <h4 class="category_text">Category: {{ category.name }}</h4>
+            </div>
+            <div class="text_price">
+              <h5 class="price">{{ product.price }} ₴</h5>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}
