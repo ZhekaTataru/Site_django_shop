@@ -16,7 +16,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(BASE_DIR, 'media/')
-
+TEMPLATE_DIR = Path(BASE_DIR, 'cart/templates')
 
 CART_SESSION_ID = 'cart'
 # Quick-start development settings - unsuitable for production
@@ -62,7 +62,7 @@ ROOT_URLCONF = 'shop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [r'C:\Users\LEGION\PycharmProjects\pythonProjectShop\shop\cart\templates'],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
